@@ -20,7 +20,7 @@ if ($session->existsErrors()) {
   ];
   $formInputsKey = new SessionKey(SessionKey::FORM_INPUTS_KEY);
   $session->set($formInputsKey, $formInputs);
-  redirect('/dao-sample/user/signin.php');
+  redirect('/sessionKey-class/user/signin.php');
 }
 
 $userDao = new UserDao();
@@ -29,7 +29,7 @@ $user = $userDao->findByMail($mail);
 
 if (!is_null($user)) $session->appendError("すでに登録済みのメールアドレスです");
 
-if (!empty($_SESSION['errors'])) redirect('/dao-sample/user/signup.php');
+if (!empty($_SESSION['errors'])) redirect('/sessionKey-class/user/signup.php');
 
 // ユーザーの保存
 $userDao->create($userName, $mail, $password);
@@ -37,4 +37,4 @@ $userDao->create($userName, $mail, $password);
 $successRegistedMessage = "登録できました。";
 $message = new SessionKey(SessionKey::MESSAGE_KEY);
 $session->setMessage($message, $successRegistedMessage);
-redirect('/dao-sample/user/signin.php');
+redirect('/sessionKey-class/user/signin.php');

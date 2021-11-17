@@ -8,7 +8,7 @@ final class Session
 {
 	private static $instance;
 
-	// シングルトンクラスはnewさせないｎのｄでのでprivateｎにｓすｒる
+	// シングルトンクラスはnewさせないのでprivateｎにする
 	private function __construct()
 	{
 	}
@@ -56,7 +56,7 @@ final class Session
 	}
 
 
-	public function set(SessionKey $sessionKey, $value): void
+	public function setFormInputs(SessionKey $sessionKey, $value): void
 	{
 		$_SESSION[$sessionKey->value()] = $value;
 	}

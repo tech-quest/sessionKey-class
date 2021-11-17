@@ -1,14 +1,16 @@
 <?php
-require_once(__DIR__ . '/../dao/Dao.php');
-
-
-final class UserDao extends Dao
+final class UserDao
 {
 	const TABLE_NAME = 'users';
+	private $pdo;
 
 	public function __construct()
 	{
-		parent::__construct();
+		try {
+			$this->pdo = new PDO('mysql:dbname=blog;host=localhost;charset=utf8', 'root', 'root');
+		} catch (PDOException $e) {
+			exit('DB接続エラー:' . $e->getMessage());
+		}
 	}
 
 	public function create(string $userName, string $mail, string $password): void

@@ -26,5 +26,5 @@ $formInputs = [
     'userName' => $member['user_name']
 ];
 $formInputsKey = new SessionKey(SessionKey::FORM_INPUTS_KEY);
-$session->set($formInputsKey, $formInputs);
+$session->setFormInputs($formInputsKey, $formInputs);
 redirect("../index.php");
