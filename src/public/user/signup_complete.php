@@ -1,8 +1,10 @@
 <?php
-require_once(__DIR__ . '/../dao/UserDao.php');
-require_once(__DIR__ . '/../utils/redirect.php');
-require_once(__DIR__ . '/../utils/Session.php');
-require_once(__DIR__ . '/../utils/SessionKey.php');
+require_once __DIR__ . '/../../app/Lib/pdoInit.php';
+require_once __DIR__ . '/../../app/Lib/findUserByMail.php';
+require_once __DIR__ . '/../../app/Lib/createUser.php';
+require_once __DIR__ . '/../../app/Lib/redirect.php';
+require_once __DIR__ . '/../../app/Lib/Session.php';
+require_once(__DIR__ . '/../../app/Lib/SessionKey.php');
 
 $mail = filter_input(INPUT_POST, 'mail');
 $userName = filter_input(INPUT_POST, 'userName');
@@ -20,21 +22,20 @@ if ($session->existsErrors()) {
   ];
   $formInputsKey = new SessionKey(SessionKey::FORM_INPUTS_KEY);
   $session->set($formInputsKey, $formInputs);
-  redirect('/sessionKey-class/user/signin.php');
+  redirect('signin.php');
 }
 
-$userDao = new UserDao();
 // メールアドレスに一致するユーザーの取得
-$user = $userDao->findByMail($mail);
+$user = findUserByMail($mail);
 
 if (!is_null($user)) $session->appendError("すでに登録済みのメールアドレスです");
 
-if (!empty($_SESSION['errors'])) redirect('/sessionKey-class/user/signup.php');
+if (!empty($_SESSION['errors'])) redirect('signup.php');
 
 // ユーザーの保存
-$userDao->create($userName, $mail, $password);
+createUser($userName, $mail, $password);
 
 $successRegistedMessage = "登録できました。";
 $message = new SessionKey(SessionKey::MESSAGE_KEY);
 $session->setMessage($message, $successRegistedMessage);
-redirect('/sessionKey-class/user/signin.php');
+redirect('signin.php');

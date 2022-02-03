@@ -1,9 +1,11 @@
 <?php
-require_once(__DIR__ . '/utils/redirect.php');
-require_once(__DIR__ . '/utils/Session.php');
+require_once __DIR__ . '/../app/Lib/redirect.php';
+require_once __DIR__ . '/../app/Lib/Session.php';
 
 $session = Session::getInstance();
-if (!isset($_SESSION["formInputs"]['userId'])) redirect("/sessionKey-class/user/signin.php");
+if (!isset($_SESSION['formInputs']['userId'])) {
+    redirect('./user/signin.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +19,7 @@ if (!isset($_SESSION["formInputs"]['userId'])) redirect("/sessionKey-class/user/
   <title>blog一覧</title>
 </head>
 
-<?php require_once(__DIR__ . '/utils/header.php'); ?>
+<?php require_once __DIR__ . '/../app/Lib/header.php'; ?>
 
 <body>
   <div class="blogs__wraper bg-green-300 py-20 px-20">

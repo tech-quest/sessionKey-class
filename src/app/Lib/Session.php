@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . '/../utils/SessionKey.php');
+require_once(__DIR__ . '/SessionKey.php');
 
 /**
  * セッション情報($_SESSION)をカプセル化したシングルトンクラス

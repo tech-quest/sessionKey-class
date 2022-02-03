@@ -1,8 +1,9 @@
 <?php
-require_once(__DIR__ . '/../dao/UserDao.php');
-require_once(__DIR__ . '/../utils/redirect.php');
-require_once(__DIR__ . '/../utils/Session.php');
-require_once(__DIR__ . '/../utils/SessionKey.php');
+require_once __DIR__ . '/../../app/Lib/pdoInit.php';
+require_once __DIR__ . '/../../app/Lib/findUserByMail.php';
+require_once __DIR__ . '/../../app/Lib/redirect.php';
+require_once __DIR__ . '/../../app/Lib/Session.php';
+require_once(__DIR__ . '/../../app/Lib/SessionKey.php');
 
 $mail = filter_input(INPUT_POST, 'mail');
 $password = filter_input(INPUT_POST, 'password');
@@ -13,17 +14,16 @@ if (empty($mail) || empty($password)) {
     redirect("./user/signin.php");
 }
 
-$userDao = new UserDao();
-$member = $userDao->findByMail($mail);
 
-if (!password_verify($password, $member["password"])) {
+$user = findUserByMail($mail);
+if (!password_verify($password, $user["password"])) {
     $session->appendError("メールアドレスまたは<br />パスワードが違います");
     redirect("./signin.php");
 }
 
 $formInputs = [
-    'userId' => $member['id'],
-    'userName' => $member['user_name']
+    'userId' => $user['id'],
+    'userName' => $user['user_name']
 ];
 $formInputsKey = new SessionKey(SessionKey::FORM_INPUTS_KEY);
 $session->setFormInputs($formInputsKey, $formInputs);
